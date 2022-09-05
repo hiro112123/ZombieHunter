@@ -2,26 +2,32 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(CharacterController))]
 public class PlayerController : MonoBehaviour
 {
+    //JoyStick
     [SerializeField] FixedJoystick playerVariableJoystick;
-    [SerializeField] float speed  = 1;
+    //移動スピード
+    [SerializeField] float speed;
+    //CharacterController型の変数
     private CharacterController playerController;
+    //playerの位置
     private Vector3 playerDirection;
-    // Start is called before the first frame update
+
     void Start()
     {
+        //CharacterControllerの取得
         playerController = GetComponent<CharacterController>();
     }
-
-    // Update is called once per frame
     void Update()
     {
+        //playerの移動
         playerController.Move(playerDirection * speed * Time.deltaTime);
     }
 
     void FixedUpdate()
     {
+        //JoyStickで動かした位置
         playerDirection = Vector3.forward * playerVariableJoystick.Vertical + Vector3.right * playerVariableJoystick.Horizontal;
     }
 }
