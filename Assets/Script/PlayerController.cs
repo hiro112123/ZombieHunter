@@ -30,4 +30,16 @@ public class PlayerController : MonoBehaviour
         //JoyStickで動かした位置
         playerDirection = Vector3.forward * playerVariableJoystick.Vertical + Vector3.right * playerVariableJoystick.Horizontal;
     }
+
+    void PlayerRotation()
+    {
+        if (Input.touchCount > 0)  
+        {
+            var touch = Input.GetTouch(0);  
+            if (touch.phase == TouchPhase.Began)  
+            {
+                var pos = touch.position;  
+            }
+        }
+    }
 }
