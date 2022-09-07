@@ -5,10 +5,14 @@ using UnityEngine;
 [RequireComponent(typeof(CharacterController))]
 public class PlayerController : MonoBehaviour
 {
-    //JoyStick
-    [SerializeField] FixedJoystick playerVariableJoystick;
+    //移動用JoyStick
+    [SerializeField] FixedJoystick moveJoystick;
+    //視点用JoyStick
+    [SerializeField] FloatingJoystick rotateJoystick;
     //移動スピード
-    [SerializeField] float speed;
+    [SerializeField] float moveSpeed;
+    //回転スピード
+     [SerializeField] float rotateSpeed;
     //CharacterController型の変数
     private CharacterController playerController;
     //playerの位置
@@ -22,24 +26,13 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         //playerの移動
-        playerController.Move(playerDirection * speed * Time.deltaTime);
+        playerController.Move(playerDirection * moveSpeed * Time.deltaTime);
+        transform.Rotate(new Vector3(0, rotateSpeed * rotateJoystick.Horizontal, 0));
     }
 
     void FixedUpdate()
     {
         //JoyStickで動かした位置
-        playerDirection = Vector3.forward * playerVariableJoystick.Vertical + Vector3.right * playerVariableJoystick.Horizontal;
-    }
-
-    void PlayerRotation()
-    {
-        if (Input.touchCount > 0)  
-        {
-            var touch = Input.GetTouch(0);  
-            if (touch.phase == TouchPhase.Began)  
-            {
-                var pos = touch.position;  
-            }
-        }
+        playerDirection = Vector3.forward * moveJoystick.Vertical + Vector3.right * moveJoystick.Horizontal;
     }
 }
